@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <link href="{% static 'css/scanqr/style.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery for AJAX -->
+</head>
+<body>
+    <button class="scan-button" id="scan-qr-btn">
+        Scan QR Code
+    </button>
+
+    <p id="qr-result">Scanned Data: <span></span></p>
+
+    <script>
+        $(document).ready(function(){
+            $("#scan-qr-btn").click(function(){
+                $.ajax({
+                    url: "{% url 'sent_data' %}",  // Django view that handles QR scanning
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: "{{ csrf_token }}"  // Required for Django security
+                    },
+                    beforeSend: function() {
+                        $("#qr-result span").text("Scanning...");
+                    },
+                    success: function(response) {
+                        if (response.data) {
+                            $("#qr-result span").text(response.data);
+                        } else {
+                            $("#qr-result span").text("No QR code detected.");
+                        }
+                    },
+                    error: function() {
+                        $("#qr-result span").text("Error scanning QR code.");
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

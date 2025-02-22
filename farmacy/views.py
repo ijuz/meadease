@@ -26,8 +26,9 @@ def get_link(request):
 
 def sent_data(request):
     if request.method == 'POST':
-        qr_data = scan_qr_code()  # Call the QR scanner function
+        qr_data = scan_qr_code()  # Get QR code data
         print("QR Code Data:", qr_data)
-        return JsonResponse({'data': qr_data})  # Send data to frontend
+        
+        return render(request, 'scanqr/index.html', {'qr_data': qr_data})
 
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+    return render(request, 'scanqr/index.html', {'error': 'Invalid request method'})

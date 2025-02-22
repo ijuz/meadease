@@ -25,20 +25,33 @@
     <!-- Appointment Section -->
     <section class="appointment">
         <h1>Make An Appointment</h1>
-        <form>
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
-            <input type="text" placeholder="Your Mobile" required>
-            <select required>
+        <form method="POST" action="{% url 'createToken' hospital.id %}">
+            {% csrf_token %}
+            
+            <!-- Dynamic form fields from tokenCreation form -->
+            <input type="text" name="name" placeholder="Your Name" value="{{ form.name.value }}" required>
+            <input type="email" name="email" placeholder="Your Email" value="{{ form.email.value }}" required>
+            <input type="text" name="mobile" placeholder="Your Mobile" value="{{ form.mobile.value }}" required>
+
+            <!-- Doctor Selection Dropdown -->
+            <select name="doctor" required>
                 <option selected disabled>Choose Doctor</option>
-                <option>Doctor 1</option>
-                <option>Doctor 2</option>
-                <option>Doctor 3</option>
+                {% for doctor in doctors %}
+                    <option value="{{ doctor.id }}" {% if form.doctor.value == doctor.id %}selected{% endif %}>
+                        {{ doctor.name }}
+                    </option>
+                {% endfor %}
             </select>
-            <input type="date" required>
-            <input type="time" required>
-            <textarea placeholder="Describe your problem" rows="4"></textarea>
-            <a href="{% url 'createToken' %}"><button type="submit">Book Appointment</button></a>
+            
+            <input type="date" name="appointment_date" value="{{ form.appointment_date.value }}" required>
+            <input type="time" name="appointment_time" value="{{ form.appointment_time.value }}" required>
+            
+            <textarea name="problem" placeholder="Describe your problem" rows="4">{{ form.problem.value }}</textarea>
+            
+            <!-- Hidden field to pass hospital ID -->
+            <input type="hidden" name="hospital" value="{{ hospital.id }}">
+            
+            <button type="submit">Book Appointment</button>
         </form>
     </section>
 </body>
