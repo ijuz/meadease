@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Token</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% for f in form %}
+        <label for="{{ form.id_for_label }}">{{ form.label }}</label>
+        {{ f }}
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
