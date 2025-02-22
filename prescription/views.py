@@ -3,32 +3,7 @@ from django.http import JsonResponse
 from .forms import SubmitPrescription
 from .models import Prescriptions
 from hospital.models import PatientDetails
-
-
-def submit_prescription(request):
-    if request.method == "POST":
-        form = SubmitPrescription(request.POST)
-        if form.is_valid():
-            token = form.cleaned_data['token_number']
-            patient = PatientDetails.objects.get(token_number=token)
-            doctor = patient.doctor
-            hospital = patient.hospital
-
-
-            instance = Prescriptions.objects.create(
-                patient=patient,
-                doctor=doctor,
-                hospital=hospital,
-                text=form.cleaned_data['text']
-            )
-            instance.save()
-
-            
-            return redirect('view_prescription')
-
-    else:
-        form = SubmitPrescription()
-    return render(request, 'prescription/prescription.html', {'form': form})
+from userApp.models import PatientModel
 
 
 # def submit_prescription(request):
@@ -36,45 +11,24 @@ def submit_prescription(request):
 #         form = SubmitPrescription(request.POST)
 #         if form.is_valid():
 #             token = form.cleaned_data['token_number']
-#             patient = get_object_or_404(PatientDetails, token_number=token)
+#             patient = PatientDetails.objects.get(token_number=token)
 #             doctor = patient.doctor
 #             hospital = patient.hospital
 
-#             # Create the Prescription instance
-#             prescription = Prescriptions.objects.create(
+
+#             instance = Prescriptions.objects.create(
 #                 patient=patient,
 #                 doctor=doctor,
 #                 hospital=hospital,
-#                 text=form.cleaned_data['text'],
-#                 symptoms=form.cleaned_data['symptoms'],
-#                 diagnosis=form.cleaned_data['diagnosis'],
-#                 additional_notes=form.cleaned_data['additional_notes'],
-#                 doctor_signature=form.cleaned_data['doctor_signature']
+#                 text=form.cleaned_data['text']
 #             )
+#             instance.save()
 
-#             # Saving medicines if available
-#             medicine_names = request.POST.getlist('medicine_name')
-#             dosages = request.POST.getlist('dosage')
-#             forms = request.POST.getlist('form')
-#             quantities = request.POST.getlist('quantity')
-#             instructions = request.POST.getlist('instructions')
-
-#             for i in range(len(medicine_names)):
-#                 if medicine_names[i].strip():  # Avoid saving empty medicine fields
-#                     Medicine.objects.create(
-#                         prescription=prescription,
-#                         name=medicine_names[i],
-#                         dosage=dosages[i],
-#                         form=forms[i],
-#                         quantity=quantities[i],
-#                         instructions=instructions[i]
-#                     )
-
-#             return redirect('view_prescription', pk=prescription.pk)
+            
+#             return redirect('view_prescription')
 
 #     else:
 #         form = SubmitPrescription()
-
 #     return render(request, 'prescription/prescription.html', {'form': form})
 
 
@@ -92,15 +46,32 @@ def view_prescription(request, pk):
     }
     return JsonResponse(context)
 
-def create_prescription(request):
+def submit_prescription(request):
     if request.method == "POST":
-        form = PrescriptionForm(request.POST)
+        form = SubmitPrescription(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('view_prescription')  # Redirect after successful form submission
+            token = form.cleaned_data['token_number']
+            patient_detail = get_object_or_404(PatientDetails, token_number=token)
+
+            # Extract PatientModel from CustomUser
+            patient = get_object_or_404(PatientModel, user=patient_detail.name)
+
+            doctor = patient_detail.doctor  # Ensure this is a DoctorModel instance
+            hospital = patient_detail.hospital  # Ensure this is a HospitalModel instance
+
+            # Create the prescription
+            instance = Prescriptions.objects.create(
+                patient=patient,  # Now correctly passing a PatientModel instance
+                doctor=doctor,
+                hospital=hospital,
+                text=form.cleaned_data['text']
+            )
+            instance.save()
+
+            return redirect('view_prescription', pk=instance.pk)
+
     else:
-        form = PrescriptionForm()
-    
-    return render(request, 'prescription_form.html', {'form': form})
+        form = SubmitPrescription()
+    return render(request, 'prescription/prescription.html', {'form': form})
 
 

@@ -17,5 +17,4 @@ class PatientModel(models.Model):
 
     def str(self):
         return self.user.username
-    
 
