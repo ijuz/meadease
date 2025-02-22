@@ -60,4 +60,4 @@ def create_token(request):
         form = tokenCreation()
         
 
-    return render(request, "mainpages/token_creation.html", { 'form': form })
+    return render(request, "appoinment/index.html", { 'form': form })

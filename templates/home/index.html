@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospitals Near You</title>
+    <link rel="stylesheet" href="{% static 'css/home/home.css' %}">
+</head>
+<body>
+
+    <!-- Navbar Start -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">medease</a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>Find the Best Hospitals Near You</h1>
+            <p>Your health is our priority. Book an appointment today.</p>
+        </div>
+    </header>
+    <!-- Hero Section End -->
+
+    <!-- Hospitals Section -->
+    <section class="hospital-section">
+        <h2 class="section-title">🏥 Our Partner Hospitals</h2>
+        <div class="hospital-container">
+            <div class="hospital">
+                <img src="img/hospital1.jpg" alt="City Hospital">
+                <div class="hospital-details">
+                    <h3>City Hospital</h3>
+                    <p><strong>Location:</strong> New York, NY</p>
+                    <p><strong>Specialty:</strong> General Healthcare</p>
+                    <a href="{% url 'createToken' %}"><button>Book Appointment</button></a>
+                </div>
+            </div>
+            <div class="hospital">
+                <img src="img/hospital2.jpg" alt="Green Valley Clinic">
+                <div class="hospital-details">
+                    <h3>Green Valley Clinic</h3>
+                    <p><strong>Location:</strong> San Francisco, CA</p>
+                    <p><strong>Specialty:</strong> Cardiology</p>
+                    <button>Book Appointment</button>
+                </div>
+            </div>
+            <div class="hospital">
+                <img src="img/hospital3.jpg" alt="Sunrise Medical">
+                <div class="hospital-details">
+                    <h3>Sunrise Medical Center</h3>
+                    <p><strong>Location:</strong> Chicago, IL</p>
+                    <p><strong>Specialty:</strong> Neurology</p>
+                    <button>Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 meadease. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

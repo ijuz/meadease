@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Clinic - Appointment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'css/appoinment/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Clinic</a>
+        <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="service.html">Services</a>
+            <a href="appointment.html" class="active">Appointment</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Appointment Section -->
+    <section class="appointment">
+        <h1>Make An Appointment</h1>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <input type="text" placeholder="Your Mobile" required>
+            <select required>
+                <option selected disabled>Choose Doctor</option>
+                <option>Doctor 1</option>
+                <option>Doctor 2</option>
+                <option>Doctor 3</option>
+            </select>
+            <input type="date" required>
+            <input type="time" required>
+            <textarea placeholder="Describe your problem" rows="4"></textarea>
+            <a href="{% url 'createToken' %}"><button type="submit">Book Appointment</button></a>
+        </form>
+    </section>
+</body>
+</html>

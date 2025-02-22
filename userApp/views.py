@@ -10,7 +10,7 @@ User = get_user_model()
 
 
 def main_page(request):
-    return render(request, "mainpages/main_page.html")
+    return render(request, "home/index.html")
 
 @login_required(login_url="")
 def DashBoard(request):
