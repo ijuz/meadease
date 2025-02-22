@@ -4,7 +4,6 @@ from .forms import DoctorForm,HospitalForm, tokenCreation
 from .models import DoctorModel, HospitalModel, PatientDetails
 from django.contrib.auth import authenticate, login as auth_login
 
-
 def DoctorSignup(request):
     if request.method == "POST":
         form = DoctorForm(request.POST)
@@ -43,7 +42,10 @@ def HospitalRegistration(request):
 
 
 
-def create_token(request):
+def create_token(request, hospital_id):
+    filtered_hospital = HospitalModel.objects.get(id=hospital_id)
+    doctors = DoctorModel.objects.all()
+
     if request.method == "POST":
         form = tokenCreation(request.POST)
         if form.is_valid():
@@ -51,13 +53,12 @@ def create_token(request):
             age = form.cleaned_data['age']
             gender = form.cleaned_data['gender']
             doctor = form.cleaned_data['doctor']
-            hospital = form.cleaned_data['hospital']
+            hospital = filtered_hospital  # Using the fetched hospital
             
-            instance = PatientDetails.objects.create(name=name, age=age, gender=gender, doctor=doctor, hospital=hospital)
-            instance.save()
-        return render(request, "mainpages/success_page.html")
+            # Create the patient details
+            PatientDetails.objects.create(name=name, age=age, gender=gender, doctor=doctor, hospital=hospital)
+            return render(request, "mainpages/success_page.html")
     else:
         form = tokenCreation()
-        
 
-    return render(request, "appoinment/index.html", { 'form': form })
+    return render(request, "appoinment/index.html", {'form': form, 'hospital': filtered_hospital,'doctors':doctors})

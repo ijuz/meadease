@@ -7,7 +7,7 @@ class SubmitPrescription(forms.ModelForm):
 
     class Meta:
         model = Prescriptions
-        fields = ['text']
+        fields = ['patient', 'doctor', 'hospital', 'text']
 
     def clean_token_number(self):
         token_number = self.cleaned_data.get('token_number')

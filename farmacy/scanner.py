@@ -3,7 +3,7 @@ import numpy as np
 
 def scan_qr_code():
     cap = cv.VideoCapture(0)
-    qr_scanner = cv.QRCodeDetector()
+    qrscanner = cv.QRCodeDetector()
 
     def getdata(data, pointer, frame):
         if data:
@@ -22,21 +22,19 @@ def scan_qr_code():
         if not ret:
             print("Could't get cammer")
             break
-        
-        data, pointer, _ = qr_scanner.detectAndDecode(frame)
-        
+
+        data, pointer,  = qr_scanner.detectAndDecode(frame)
+
         getout = getdata(data, pointer, frame)
 
         if getout:
             print("Link is: ", getout)
             break
-            
-        
+
+
         cv.imshow("video File", frame)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
 
     cap.release()
     cv.destroyAllWindows()
-
-scan_qr_code()
