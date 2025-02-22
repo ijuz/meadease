@@ -37,40 +37,21 @@
     <section class="hospital-section">
         <h2 class="section-title">🏥 Our Partner Hospitals</h2>
         <div class="hospital-container">
-            <div class="hospital">
-                <img src="img/hospital1.jpg" alt="City Hospital">
-                <div class="hospital-details">
-                    <h3>City Hospital</h3>
-                    <p><strong>Location:</strong> New York, NY</p>
-                    <p><strong>Specialty:</strong> General Healthcare</p>
-                    <a href="{% url 'createToken' %}"><button>Book Appointment</button></a>
+            {% for hospital in hospitals %}
+                <div class="hospital">
+                    <img src="{% static 'img/hospital1.jpg' %}" alt="{{ hospital.name }}">
+                    <div class="hospital-details">
+                        <h3>{{ hospital.name }}</h3>
+                        <p><strong>Location:</strong> {{ hospital.location }}</p>
+                        <p><strong>Specialty:</strong> {{ hospital.specialty }}</p>
+                        <a href="{% url 'createToken' hospital.id %}">
+                            <button>Book Appointment</button>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="hospital">
-                <img src="img/hospital2.jpg" alt="Green Valley Clinic">
-                <div class="hospital-details">
-                    <h3>Green Valley Clinic</h3>
-                    <p><strong>Location:</strong> San Francisco, CA</p>
-                    <p><strong>Specialty:</strong> Cardiology</p>
-                    <button>Book Appointment</button>
-                </div>
-            </div>
-            <div class="hospital">
-                <img src="img/hospital3.jpg" alt="Sunrise Medical">
-                <div class="hospital-details">
-                    <h3>Sunrise Medical Center</h3>
-                    <p><strong>Location:</strong> Chicago, IL</p>
-                    <p><strong>Specialty:</strong> Neurology</p>
-                    <button>Book Appointment</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2025 meadease. All Rights Reserved.</p>
-    </footer>
 
 </body>
 </html>

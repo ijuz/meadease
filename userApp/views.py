@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model, authenticate, login as auth_logi
 from django.contrib.auth.decorators import login_required
 from .forms import PatientSignup
 from .models import PatientModel,CustomUser
+from hospital.models import HospitalModel
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponseRedirect
 
@@ -10,7 +11,8 @@ User = get_user_model()
 
 
 def main_page(request):
-    return render(request, "home/index.html")
+    hospitals = HospitalModel.objects.all()
+    return render(request, "home/index.html", {"hospitals": hospitals})
 
 @login_required(login_url="")
 def DashBoard(request):

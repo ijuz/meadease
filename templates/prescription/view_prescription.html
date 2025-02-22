@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Details</title>
+    <link rel="stylesheet" href="{% static 'css/prescription/style2.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Prescription Details</h2>
+        <div class="details">
+            <p><strong>Patient:</strong> {{ prescription.patient.name }}</p>
+            <p><strong>Doctor:</strong> {{ prescription.doctor.name }}</p>
+            <p><strong>Hospital:</strong> {{ prescription.hospital.name }}</p>
+            <p><strong>Prescription:</strong> {{ prescription.text }}</p>
+            <p><strong>Date:</strong> {{ prescription.date }}</p>
+        </div>
+        <a href="/" class="back-btn">Go Back</a>
+    </div>
+</body>
+</html>

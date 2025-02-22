@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Prescription</title>
+    <link rel="stylesheet" href="{% static 'css/prescription/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Doctor's Prescription</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="section">
+                <h3>Prescription Details</h3>
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="submit-btn">Generate Prescription</button>
+        </form>
+    </div>
+</body>
+</html>
